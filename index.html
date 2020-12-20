@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+        <form>
+            <input type="text" v-model="form.name">
+            <button @click.prevent="add_button" v-show="!updateSubmit" >Add</button>
+            <button @click.prevent="update" v-show="updateSubmit">Update</button>
+        </form>
+      <ul v-for="(user, index) in users" >
+        <li>{{ user.name }}
+            <button @click.prevent="Edit_nama(user,index)">Edit</button>
+            ||
+            <button  @click.prevent="hapus(index)">Delete</button>
+      </ul>
+        </li>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            users: [
+              {
+                name: "Muhamad Iqbal Mubarok",
+              },
+              {
+                name: "Ruby Purwanti",
+              },
+              {
+                name: "Faqih Muhammad",
+              },
+            ],
+            
+            updateSubmit:false,
+            form:{
+                'name' : ''
+            },
+
+            UserId:null,
+
+          };
+        },
+        methods: {
+            add_button(){
+                this.users.push(
+                    this.form
+                )
+                this.form={}
+            },
+            Edit_nama(user, index){
+                this.UserId = index
+                this.updateSubmit = true
+                this.form.name = user.name
+               
+            },
+            update(){
+                // console.log(this.users[this.UserId].name);
+                this.users[this.UserId].name =this.form.name
+                this.form=""
+                this.updateSubmit=false
+                this.UserId=null
+            
+            },
+            hapus(index){
+                let i = confirm('anda yakin ?')
+                if(i){
+                    this.users.splice(index,1)
+                }
+            }
+        },
+      });
+    </script>
+  </body>
+</html>
